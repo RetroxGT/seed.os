@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seed.OS</title>
+  <meta name="theme-color" content="#080b09">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --bg: #080b09;
+      --panel: #101712;
+      --green: #70e69a;
+      --muted: #858d87;
+      --border: rgba(112, 230, 154, 0.17);
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse at 50% 0%, #13291b 0%, transparent 48%),
+        var(--bg);
+      color: #f2f5f2;
+      font-family: Inter, Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .nav-wrap {
+      position: fixed;
+      top: 18px;
+      left: 0;
+      width: 100%;
+      padding: 0 16px;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px;
+      background: rgba(12, 17, 13, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 8px 35px #0005;
+    }
+
+    .brand {
+      font-weight: 800;
+      padding: 10px 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand span {
+      color: var(--green);
+    }
+
+    nav a:not(.brand) {
+      color: #aeb7b0;
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      color: white;
+      background: #ffffff0c;
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 150px 20px 80px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green);
+      background: #70e69a0c;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 12px;
+      margin-bottom: 25px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px #70e69a88;
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: 1.05;
+      letter-spacing: -4px;
+      max-width: 850px;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 510px;
+      margin: 22px auto 30px;
+      font-size: 15px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--green);
+      color: #07100a;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-weight: 750;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px #70e69a25;
+    }
+
+    .section {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 75px 22px;
+      scroll-margin-top: 80px;
+    }
+
+    .section-label {
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(27px, 4vw, 39px);
+      letter-spacing: -1.5px;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .panel {
+      background: linear-gradient(145deg, #121a14, #0d120e);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 23px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .panel:hover {
+      border-color: #70e69a55;
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 39px;
+      height: 39px;
+      border-radius: 12px;
+      background: #70e69a12;
+      color: var(--green);
+      font-size: 19px;
+      margin-bottom: 18px;
+    }
+
+    .panel h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .panel p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* Seed.OS PC system card */
+
+    .system-card {
+      max-width: 430px;
+      width: 100%;
+      margin: 10px auto 0;
+      background: #121713;
+      border: 1px solid #343b35;
+      border-radius: 20px;
+      padding: 15px;
+      transition: 0.25s;
+    }
+
+    .system-card:hover {
+      transform: translateY(-4px);
+      border-color: #59645b;
+    }
+
+    .card-art {
+      min-height: 175px;
+      background:
+        radial-gradient(ellipse at 50% 120%, #34513a 0%, transparent 60%),
+        #202622;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-art::before {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border: 1px solid #a1b1a122;
+      border-radius: 50%;
+    }
+
+    .card-art::after {
+      content: "";
+      position: absolute;
+      width: 135px;
+      height: 135px;
+      border: 1px solid #a1b1a122;
+      border-radius: 50%;
+    }
+
+    .art-logo {
+      font-size: 47px;
+      font-weight: 900;
+      color: #a0a7a1;
+      letter-spacing: -3px;
+      z-index: 1;
+    }
+
+    .unknown {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
+      background: #343a35;
+      border: 1px solid #4a514b;
+      color: #c0c5c1;
+      padding: 6px 9px;
+      font-size: 10px;
+      border-radius: 7px;
+    }
+
+    .card-info {
+      padding: 17px 4px 4px;
+    }
+
+    .card-info h3 {
+      color: #c1c6c2;
+      font-size: 19px;
+      margin-bottom: 7px;
+    }
+
+    .creator {
+      color: #7d867f;
+      font-size: 12px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 16px;
+      margin-top: 17px;
+      color: #858d87;
+      font-size: 11px;
+    }
+
+    .open-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      width: 100%;
+      margin-top: 18px;
+      background: #70e69a;
+      color: #0b130d;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      transition: 0.2s;
+    }
+
+    .open-button:hover {
+      background: #91f2b0;
+      transform: translateY(-2px);
+    }
+
+    .update-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 17px;
+    }
+
+    .version {
+      color: var(--green);
+      background: #70e69a12;
+      border: 1px solid var(--border);
+      padding: 6px 9px;
+      border-radius: 8px;
+      font-size: 11px;
+    }
+
+    .status {
+      color: #a1aaa3;
+      font-size: 11px;
+      padding-top: 6px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #ffffff12;
+      padding: 19px 0;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .faq-item p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      padding-top: 13px;
+    }
+
+    footer {
+      border-top: 1px solid #ffffff10;
+      padding: 28px 20px;
+      text-align: center;
+      color: #737c75;
+      font-size: 12px;
+    }
+
+    footer span {
+      color: var(--green);
+    }
+
+    @media (max-width: 700px) {
+      nav {
+        gap: 0;
+        padding: 6px;
+      }
+
+      .brand {
+        padding: 9px;
+        font-size: 13px;
+      }
+
+      nav a:not(.brand) {
+        padding: 9px 7px;
+        font-size: 11px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero {
+        min-height: 80vh;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-wrap">
+    <nav>
+      <a class="brand" href="#home">🌱 Seed<span>.OS</span></a>
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#system">System</a>
+      <a href="#updates">Updates</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="eyebrow">
+        <span class="dot"></span>
+        BUILT INSIDE GRABVR
+      </div>
+
+      <h1>Your world.<br><span>Your system.</span></h1>
+
+      <p>
+        Meet Seed.OS — a custom PC experience made with code and
+        triggers. Built different, built for GrabVR.
+      </p>
+
+      <a class="button" href="#system">
+        Explore Seed.OS <span>↗</span>
+      </a>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-label">What it's about</div>
+      <h2>Made to be your own.</h2>
+      <p class="section-desc">
+        A custom system concept built around creativity, code, and GrabVR.
+      </p>
+
+      <div class="grid">
+        <article class="panel">
+          <div class="feature-icon">⌘</div>
+          <h3>Code & Triggers</h3>
+          <p>
+            A project built around custom code and trigger-based
+            interactions.
+          </p>
+        </article>
+
+        <article class="panel">
+          <div class="feature-icon">◈</div>
+          <h3>Custom Experience</h3>
+          <p>
+            A distinct Seed.OS identity with a dark interface and
+            green accents.
+          </p>
+        </article>
+
+        <article class="panel">
+          <div class="feature-icon">↗</div>
+          <h3>Always Growing</h3>
+          <p>
+            A project that can expand with new ideas and future updates.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="system">
+      <div class="section-label">Project showcase</div>
+      <h2>Seed.OS - PC System</h2>
+      <p class="section-desc">
+        The Seed.OS project card.
+      </p>
+
+      <div class="system-card">
+        <div class="card-art">
+          <div class="unknown">Unknown!</div>
+          <div class="art-logo">Seed.OS</div>
+        </div>
+
+        <div class="card-info">
+          <h3>Seed.OS - PC System</h3>
+          <div class="creator">Jamm_vr</div>
+
+          <div class="stats">
+            <span>Likes: null</span>
+            <span>Views: null</span>
+            <span>Other: null</span>
+          </div>
+
+          <a class="open-button" href="#about">
+            Open <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="updates">
+      <div class="section-label">Development log</div>
+      <h2>Development updates.</h2>
+      <p class="section-desc">
+        Follow the progress of Seed.OS as development continues.
+      </p>
+
+      <div class="grid">
+        <article class="panel">
+          <div class="update-top">
+            <span class="version">v1.0</span>
+            <span class="status">Project start</span>
+          </div>
+          <h3>Seed.OS begins</h3>
+          <p>
+            The beginning of the Seed.OS project and its visual identity.
+          </p>
+        </article>
+
+        <article class="panel">
+          <div class="update-top">
+            <span class="version">Future</span>
+            <span class="status">Planned</span>
+          </div>
+          <h3>More improvements</h3>
+          <p>
+            Future features and changes will be announced here.
+          </p>
+        </article>
+
+        <article class="panel">
+          <div class="update-top">
+            <span class="version">Soon</span>
+            <span class="status">In progress</span>
+          </div>
+          <h3>More to come</h3>
+          <p>
+            This section will grow as new development milestones are reached.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-label">About Seed.OS</div>
+      <h2>Your project. Your rules.</h2>
+      <p class="section-desc">
+        Seed.OS is a custom PC project made with code and triggers inside
+        GrabVR. This website is its home for showcasing the project,
+        sharing updates, and collecting information in one place.
+      </p>
+
+      <div class="panel">
+        <h3>Frequently asked questions</h3>
+
+        <details class="faq-item">
+          <summary>What is Seed.OS?</summary>
+          <p>
+            Seed.OS is a custom PC system project made with code and
+            triggers inside GrabVR.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Where is Seed.OS being built?</summary>
+          <p>
+            Seed.OS is being developed inside GrabVR.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>When is it releasing?</summary>
+          <p>
+            A confirmed release date has not been added yet.
+            Check the development updates for future news.
+          </p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><span>Seed.OS</span> · Built different. Built in GrabVR.</p>
+  </footer>
+
+  <script>
+    // Smooth navigation for browsers that support it.
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", event => {
+        const target = document.querySelector(link.getAttribute("href"));
+
+        if (target) {
+          event.preventDefault();
+          target.scrollIntoView({
+            behavior: window.matchMedia(
+              "(prefers-reduced-motion: reduce)"
+            ).matches ? "auto" : "smooth"
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
